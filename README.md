@@ -45,7 +45,7 @@ sudo apt install -y cargo cmake just libexpat1-dev libfontconfig-dev libfreetype
 Clone the repository and run the local installation recipe:
 
 ```bash
-git clone https://github.com/abde/cosmic-applet-trash.git
+git clone https://github.com/ChAbde17/cosmic-applet-trash.git
 cd cosmic-applet-trash
 
 # Build release binary and install to ~/.local
@@ -54,7 +54,7 @@ just user-install
 
 This places:
 - Binary $\rightarrow$ `~/.local/bin/cosmic-applet-trash`
-- Desktop Entry $\rightarrow$ `~/.local/share/applications/com.github.abde.cosmic-applet-trash.desktop`
+- Desktop Entry $\rightarrow$ `~/.local/share/applications/com.github.ChAbde17.cosmic-applet-trash.desktop`
 
 ### Manual Compilation
 
