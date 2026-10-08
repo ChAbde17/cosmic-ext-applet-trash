@@ -1,10 +1,9 @@
 [package]
-name = "{{ project-name }}"
+name = "cosmic-applet-trash"
 version = "0.1.0"
-edition = "2024"
-license = "{{ license }}"
-description = "{{ description }}"
-repository = "{{ repository-url }}"
+edition = "2021"
+license = "GPL-3.0"
+description = "COSMIC DE Applet for managing desktop Trash"
 
 [build-dependencies]
 xdgen = "0.1"
@@ -13,6 +12,8 @@ xdgen = "0.1"
 i18n-embed-fl = "0.10"
 rust-embed = "8.11"
 tokio = { version = "1.52.0", features = ["full"] }
+notify = "6.1"
+urlencoding = "2.1"
 
 [dependencies.i18n-embed]
 version = "0.16"
