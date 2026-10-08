@@ -1,14 +1,15 @@
 [Desktop Entry]
-Name={{ project-name | title_case }}
-Comment={{ description }}
+Name=Trash
+Name[en]=Trash
+Comment=Trash applet for COSMIC DE
+Comment[en]=Trash applet for COSMIC DE
 Type=Application
-Icon={{ appid }}
-Exec={{ project-name }} %F
+Icon=user-trash-symbolic
+Exec=cosmic-applet-trash
 Terminal=false
 StartupNotify=true
-Categories=COSMIC
-Keywords=COSMIC
+Categories=COSMIC;Applet;
+Keywords=cosmic;desktop;trash;garbage;restore;
 NoDisplay=true
 X-CosmicApplet=true
 X-CosmicHoverPopup=Auto
-MimeType=

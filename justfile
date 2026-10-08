@@ -1,6 +1,5 @@
-name := '{{ project-name }}'
-appid := '{{ appid }}'
-{% raw %}
+name := 'cosmic-applet-trash'
+appid := 'com.github.abde.cosmic-applet-trash'
 rootdir := ''
 prefix := '/usr'
 
@@ -22,13 +21,6 @@ default: build-release
 clean:
     cargo clean
 
-# Removes vendored dependencies
-clean-vendor:
-    rm -rf .cargo vendor vendor.tar
-
-# `cargo clean` and removes vendored dependencies
-clean-dist: clean clean-vendor
-
 # Compiles with debug profile
 build-debug *args:
     cargo build {{args}}
@@ -36,50 +28,28 @@ build-debug *args:
 # Compiles with release profile
 build-release *args: (build-debug '--release' args)
 
-# Compiles release profile with vendored dependencies
-build-vendored *args: vendor-extract (build-release '--frozen --offline' args)
-
 # Runs a clippy check
 check *args:
-    cargo clippy --all-features {{args}} -- -W clippy::pedantic
-
-# Runs a clippy check with JSON message format
-check-json: (check '--message-format=json')
+    cargo clippy --all-features {{args}}
 
 # Run the application for testing purposes
 run *args:
     env RUST_BACKTRACE=full cargo run --release {{args}}
 
-# Installs files
+# Installs files to system /usr
 install:
     install -Dm0755 {{ cargo-target-dir / 'release' / name }} {{bin-dst}}
     install -Dm0644 {{ 'target' / 'xdgen' / 'app.desktop' }} {{desktop-dst}}
     install -Dm0644 {{ 'target' / 'xdgen' / 'app.metainfo.xml' }} {{appdata-dst}}
     install -Dm0644 resources/icon.svg {{icon-dst}}
 
+# Installs files to ~/.local for local user without sudo
+user-install:
+    mkdir -p ~/.local/bin ~/.local/share/applications ~/.local/share/icons/hicolor/scalable/apps
+    install -Dm0755 {{ cargo-target-dir / 'release' / name }} ~/.local/bin/{{name}}
+    install -Dm0644 {{ 'target' / 'xdgen' / 'app.desktop' }} ~/.local/share/applications/{{desktop}}
+    install -Dm0644 resources/icon.svg ~/.local/share/icons/hicolor/scalable/apps/{{appid}}.svg
+
 # Uninstalls installed files
 uninstall:
-    rm {{bin-dst}} {{desktop-dst}} {{icon-dst}}
-
-# Vendor dependencies locally
-vendor:
-    mkdir -p .cargo
-    cargo vendor --sync Cargo.toml | head -n -1 > .cargo/config.toml
-    echo 'directory = "vendor"' >> .cargo/config.toml
-    echo >> .cargo/config.toml
-    rm -rf .cargo vendor
-
-# Extracts vendored dependencies
-vendor-extract:
-    rm -rf vendor
-    tar pxf vendor.tar
-
-# Bump cargo version, create git commit, and create tag
-tag version:
-    find -type f -name Cargo.toml -exec sed -i '0,/^version/s/^version.*/version = "{{version}}"/' '{}' \; -exec git add '{}' \;
-    cargo check
-    cargo clean
-    git add Cargo.lock
-    git commit -m 'release: {{version}}'
-    git tag -a {{version}} -m ''
-{% endraw %}
+    rm -f {{bin-dst}} {{desktop-dst}} {{icon-dst}} ~/.local/bin/{{name}} ~/.local/share/applications/{{desktop}}
