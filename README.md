@@ -3,6 +3,7 @@
 A lightweight, native Trash applet for the **COSMIC Desktop Environment** (System76 / Pop!_OS 24.04) built in Rust using `libcosmic`.
 
 ![COSMIC DE Trash Applet](resources/screenshots/popup-menu.png)
+![COSMIC DE Empty Trash](resources/screenshots/empty-trash.png)
 
 ---
 
@@ -23,22 +24,6 @@ Having to manually launch the file manager to inspect deleted files, restore an 
 - ⚠️ **Safe Empty Trash**: Includes an interactive confirmation modal to prevent accidental data loss.
 - 📊 **Detailed Summary**: Displays item count, individual original file paths, deletion dates, and formatted total disk space used.
 - 🧩 **Native COSMIC Settings Integration**: Features `X-CosmicApplet=true` metadata so it appears natively in COSMIC Settings under Panel and Dock applets.
-
----
-
-## 📸 Screenshots & Visual Tour
-
-> [!TIP]
-> **How to add your own screenshots to this repository:**
-> 1. Use **Pop!_OS Screenshot Tool** (`Super` + `Shift` + `S` or `PrtScn`).
-> 2. Save your screenshots inside the [`resources/screenshots/`](resources/screenshots/) directory.
-> 3. Name the files according to the table below and they will display automatically in this README.
-
-| Screenshot Target | Recommended File Name | Description |
-|---|---|---|
-| **Applet Popup** | `resources/screenshots/popup-menu.png` | The applet popup showing trashed items, original paths, and size summary. |
-| **Panel / Dock View** | `resources/screenshots/applet-panel.png` | The applet icon sitting in the COSMIC panel or dock. |
-| **Empty Confirmation** | `resources/screenshots/empty-confirm.png` | The safety prompt when clicking *Empty Trash*. |
 
 ---
 
