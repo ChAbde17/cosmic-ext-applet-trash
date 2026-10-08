@@ -29,7 +29,7 @@ Having to manually launch the file manager to inspect deleted files, restore an 
 
 ## 🛠️ Prerequisites & Build Dependencies
 
-To build `cosmic-applet-trash` on Pop!_OS 24.04 or Ubuntu/Debian:
+To build `cosmic-ext-applet-trash` on Pop!_OS 24.04 or Ubuntu/Debian:
 
 ```bash
 sudo apt update
@@ -45,23 +45,23 @@ sudo apt install -y cargo cmake just libexpat1-dev libfontconfig-dev libfreetype
 Clone the repository and run the local installation recipe:
 
 ```bash
-git clone https://github.com/ChAbde17/cosmic-applet-trash.git
-cd cosmic-applet-trash
+git clone https://github.com/ChAbde17/cosmic-ext-applet-trash.git
+cd cosmic-ext-applet-trash
 
 # Build release binary and install to ~/.local
 just user-install
 ```
 
 This places:
-- Binary $\rightarrow$ `~/.local/bin/cosmic-applet-trash`
-- Desktop Entry $\rightarrow$ `~/.local/share/applications/com.github.ChAbde17.cosmic-applet-trash.desktop`
+- Binary $\rightarrow$ `~/.local/bin/cosmic-ext-applet-trash`
+- Desktop Entry $\rightarrow$ `~/.local/share/applications/com.github.abde.cosmic-applet-trash.desktop`
 
 ### Manual Compilation
 
 ```bash
 cargo build --release
 ```
-The compiled binary will be located at `target/release/cosmic-applet-trash`.
+The compiled binary will be located at `target/release/cosmic-ext-applet-trash`.
 
 ---
 
