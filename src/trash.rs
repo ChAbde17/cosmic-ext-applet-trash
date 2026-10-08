@@ -199,14 +199,25 @@ impl TrashBackend {
 
     pub fn open_trash_in_file_manager() {
         let trash_dir = Self::get_trash_dir().join("files");
-        if Command::new("cosmic-files")
+        let _ = fs::create_dir_all(&trash_dir);
+
+        // Try `gio open trash:///` first (native COSMIC/Freedesktop trash URI handler)
+        if Command::new("gio")
+            .arg("open")
             .arg("trash:///")
             .spawn()
             .is_err()
         {
-            let _ = Command::new("xdg-open")
+            // Fallback to direct directory path in cosmic-files or xdg-open
+            if Command::new("cosmic-files")
                 .arg(&trash_dir)
-                .spawn();
+                .spawn()
+                .is_err()
+            {
+                let _ = Command::new("xdg-open")
+                    .arg(&trash_dir)
+                    .spawn();
+            }
         }
     }
 }
