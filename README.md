@@ -1,33 +1,95 @@
-# COSMIC Applet Template
+# 🗑️ COSMIC DE Trash Applet
 
-A template for developing applets for the COSMIC™ desktop environment using [libcosmic][libcosmic].
+A lightweight, native Trash applet for the **COSMIC Desktop Environment** (System76 / Pop!_OS 24.04) built in Rust using `libcosmic`.
 
-## Getting Started
+![COSMIC DE Trash Applet](resources/screenshots/popup-menu.png)
 
-> Please refer to the [COSMIC Trademark Policy][cosmic-trademark] when choosing a name for a project.
+---
 
-To create an applet with this template, [install `cargo generate`][cargo-generate] and run:
+## 💡 Why This Project Exists
 
-```sh
-cargo generate gh:pop-os/cosmic-applet-template
+The new **COSMIC Desktop Environment** on Pop!_OS 24.04 is fast, modern, and written entirely in Rust. However, out of the box, there was **no native panel or dock applet available for managing desktop Trash**.
+
+Having to manually launch the file manager to inspect deleted files, restore an accidentally trashed document, or clear disk space was an unnecessary interruption. I created this dedicated applet to bridge that gap — giving Pop!_OS and COSMIC users a clean, instant, and interactive Trash manager right in their panel or dock.
+
+---
+
+## ✨ Features
+
+- 🎨 **Dynamic Panel & Dock Icon**: Automatically toggles between empty (`user-trash-symbolic`) and full (`user-trash-full-symbolic`) icons based on trash contents.
+- ⚡ **Real-Time Synchronisation**: Uses `notify` to watch `~/.local/share/Trash` for filesystem changes, ensuring instant icon and list updates without polling delay.
+- ↺ **Individual File Restoration**: Parses Freedesktop `.trashinfo` metadata to restore files or directories back to their exact original location with a single click.
+- 📂 **Native File Manager Integration**: "Open in Files" opens the `trash:///` location directly in **COSMIC Files**.
+- ⚠️ **Safe Empty Trash**: Includes an interactive confirmation modal to prevent accidental data loss.
+- 📊 **Detailed Summary**: Displays item count, individual original file paths, deletion dates, and formatted total disk space used.
+- 🧩 **Native COSMIC Settings Integration**: Features `X-CosmicApplet=true` metadata so it appears natively in COSMIC Settings under Panel and Dock applets.
+
+---
+
+## 📸 Screenshots & Visual Tour
+
+> [!TIP]
+> **How to add your own screenshots to this repository:**
+> 1. Use **Pop!_OS Screenshot Tool** (`Super` + `Shift` + `S` or `PrtScn`).
+> 2. Save your screenshots inside the [`resources/screenshots/`](resources/screenshots/) directory.
+> 3. Name the files according to the table below and they will display automatically in this README.
+
+| Screenshot Target | Recommended File Name | Description |
+|---|---|---|
+| **Applet Popup** | `resources/screenshots/popup-menu.png` | The applet popup showing trashed items, original paths, and size summary. |
+| **Panel / Dock View** | `resources/screenshots/applet-panel.png` | The applet icon sitting in the COSMIC panel or dock. |
+| **Empty Confirmation** | `resources/screenshots/empty-confirm.png` | The safety prompt when clicking *Empty Trash*. |
+
+---
+
+## 🛠️ Prerequisites & Build Dependencies
+
+To build `cosmic-applet-trash` on Pop!_OS 24.04 or Ubuntu/Debian:
+
+```bash
+sudo apt update
+sudo apt install -y cargo cmake just libexpat1-dev libfontconfig-dev libfreetype-dev libxkbcommon-dev pkgconf
 ```
 
-A [justfile](./justfile) is included by default with common recipes used by other COSMIC projects. Install from [casey/just][just]
+---
 
-- `just` builds the applet with the default `just build-release` recipe
-- `just run` builds and runs the applet
-- `just install` installs the project into the system
-- `just vendor` creates a vendored tarball
-- `just build-vendored` compiles with vendored dependencies from that tarball
-- `just check` runs clippy on the project to check for linter warnings
-- `just check-json` can be used by IDEs that support LSP
+## 🚀 Installation
 
-## Documentation
+### Quick Installation (Local User)
 
-Refer to the [libcosmic API documentation][api-docs] and [book][book] for help with building applets with [libcosmic][libcosmic].
+Clone the repository and run the local installation recipe:
 
-[api-docs]: https://pop-os.github.io/libcosmic/cosmic/
-[book]: https://pop-os.github.io/libcosmic-book/
-[cargo-generate]: https://cargo-generate.github.io/cargo-generate/installation.html
-[cosmic-trademark]: https://github.com/pop-os/cosmic-epoch/blob/master/TRADEMARK.md
-[just]: https://github.com/casey/just
+```bash
+git clone https://github.com/abde/cosmic-applet-trash.git
+cd cosmic-applet-trash
+
+# Build release binary and install to ~/.local
+just user-install
+```
+
+This places:
+- Binary $\rightarrow$ `~/.local/bin/cosmic-applet-trash`
+- Desktop Entry $\rightarrow$ `~/.local/share/applications/com.github.abde.cosmic-applet-trash.desktop`
+
+### Manual Compilation
+
+```bash
+cargo build --release
+```
+The compiled binary will be located at `target/release/cosmic-applet-trash`.
+
+---
+
+## ⚙️ Enabling the Applet in COSMIC
+
+1. Open **COSMIC Settings** (press `Super` and search for *Settings*).
+2. Navigate to **Desktop** $\rightarrow$ **Panel** (or **Dock**).
+3. Click **Add Applet** (or **Applets** $\rightarrow$ **+ Add Applet**).
+4. Select **Trash** from the list of available applets.
+5. Drag and position the applet wherever you prefer on your panel or dock!
+
+---
+
+## 📄 License
+
+Distributed under the **GPL-3.0 License**. See `LICENSE` for more information.
